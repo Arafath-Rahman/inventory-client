@@ -1,25 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import "./Header.css";
 
 const Header = () => {
   return (
-    <nav className="container w-screen h-20 bg-slate-400 flex items-center justify-between">
-    <div className="flex items-center gap-2">
-      <img className="h-12" src={require('../../../Assets/images/logo.png')} alt="" />
-      <h2 className="text-xl font-bold">PRAN Dealer Inventory</h2>
+    <div className="">
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top" className="">
+        <Container>
+          <Navbar.Brand href="#home">
+            <img
+              alt=""
+              src={require("../../../Assets/images/logo.png")}
+              width="45"
+              height="30"
+              className="d-inline-block align-top"
+            />{" "}
+            PRAN DEALER INVENTORY
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="ms-auto">
+              <LinkContainer to="/features">
+                <Nav.Link>Features</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/pricing">
+                <Nav.Link>Pricing</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/login">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </div>
-      <div>
-        <ul className="flex ">
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/blogs">Blogs</Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
   );
 };
 
