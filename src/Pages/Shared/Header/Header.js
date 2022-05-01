@@ -5,23 +5,32 @@ import "./Header.css";
 const Header = () => {
   return (
     <div className="">
-      <Navbar collapseOnSelect expand="lg" bg="light" variant="light" fixed="top" className="">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        bg="light"
+        variant="light"
+        fixed="top"
+        className=""
+      >
         <Container>
-          <Navbar.Brand href="#home">
-            <img
-              alt=""
-              src={require("../../../Assets/images/logo.png")}
-              width="45"
-              height="30"
-              className="d-inline-block align-top"
-            />{" "}
-            PRAN DEALER INVENTORY
-          </Navbar.Brand>
+          <LinkContainer to='/'>
+            <Navbar.Brand className='fw-bold' href="#home">
+              <img
+                alt=""
+                src={require("../../../Assets/images/logo.png")}
+                width="45"
+                height="30"
+                className="d-inline-block align-top"
+              />{" "}
+              PRAN DEALER INVENTORY
+            </Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
-              <LinkContainer to="/features">
-                <Nav.Link>Features</Nav.Link>
+              <LinkContainer to="/home">
+                <Nav.Link>Home</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/pricing">
                 <Nav.Link>Pricing</Nav.Link>
