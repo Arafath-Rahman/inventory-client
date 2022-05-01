@@ -8,6 +8,7 @@ import "./SignUp.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
@@ -23,10 +24,12 @@ const SignUp = () => {
   ] = useCreateUserWithEmailAndPassword(auth);
 
   const onSubmit = (data) => {
-    const { email, password } = data;
+    const { email, password, name } = data;
     createUserWithEmailAndPassword(email, password);
-    reset();
+    reset();  
   };
+
+  const gotoHome = () => navigate("/");
 
   if (signedUser?.user?.uid) {
     toast.success("SignUp Successful!", {
@@ -39,7 +42,7 @@ const SignUp = () => {
       progress: undefined,
       toastId: "success1",
     });
-    navigate("/");
+    gotoHome();
   }
 
   return (

@@ -1,20 +1,51 @@
 import React from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import auth from "../../../firebase.init";
 import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+  
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
+  const [
+    signInWithEmailAndPassword,
+    loggedUser,
+    loggedLoading,
+    loggedError,
+  ] = useSignInWithEmailAndPassword(auth);
   
   const onSubmit = (data) => {
-    console.log(data);
-    console.log('errors', errors);
+    const { email, password } = data;
+    signInWithEmailAndPassword(email, password);
+    reset();
+    
   };
+
+  const gotoHome = () => navigate("/");
+
+  if (loggedUser?.user?.uid) {
+    toast.success("Login Successful!", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      toastId: "success1",
+    });
+    gotoHome();
+    console.log(loggedUser);
+  }
 
   return (
     <div id="login-container" className="mx-auto">
