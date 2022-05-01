@@ -8,7 +8,7 @@ const HomeItems = () => {
   return (
     <div>
       <h2 className='text-center' style={{color:'tomato'}}>Items: {items.length}</h2>
-      <div className='row'>
+      <div id='items-container' className='container row  g-3'>
         {
           items.slice(0, 6).map(item => <Item item={item} />)
         }

@@ -1,10 +1,21 @@
-import React from 'react';
-import './Item.css';
+import React from "react";
+import { Button, Card } from "react-bootstrap";
+import "./Item.css";
 
 const Item = ({ item }) => {
   return (
-    <div className='col-12 col-md-4'>
-      <p>Name: {item.name}</p>
+    <div className="col col-md-6 col-lg-4 d-flex justify-content-center text-center">
+      <Card style={{ width: "20rem" }}>
+        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Body>
+          <Card.Title>Card Title</Card.Title>
+          <Card.Text>
+            Some quick example text to build on the card title and make up the
+            bulk of the card's content.
+          </Card.Text>
+          <Button variant="primary">Go somewhere</Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 };
