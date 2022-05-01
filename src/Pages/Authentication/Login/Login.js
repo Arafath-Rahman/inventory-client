@@ -27,7 +27,6 @@ const Login = () => {
     const { email, password } = data;
     signInWithEmailAndPassword(email, password);
     reset();
-    
   };
 
   const gotoHome = () => navigate("/");
@@ -44,7 +43,6 @@ const Login = () => {
       toastId: "success1",
     });
     gotoHome();
-    console.log(loggedUser);
   }
 
   return (

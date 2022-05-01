@@ -21,10 +21,11 @@ const SignUp = () => {
     signedUser,
     signedLoading,
     signedError,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
   const onSubmit = (data) => {
-    const { email, password, name } = data;
+    console.log(data);
+    const { email, password } = data;
     createUserWithEmailAndPassword(email, password);
     reset();  
   };

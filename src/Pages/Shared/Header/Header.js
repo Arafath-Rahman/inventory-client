@@ -12,7 +12,7 @@ const Header = () => {
     <div className="">
       <Navbar
         collapseOnSelect
-        expand="lg"
+        expand="md"
         bg="light"
         variant="light"
         fixed="top"
@@ -28,7 +28,7 @@ const Header = () => {
                 height="30"
                 className="d-inline-block align-top"
               />{" "}
-              PRAN DEALER INVENTORY
+              <span style={{color:'tomato'}} >PRAN DEALER INVENTORY</span>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -41,7 +41,7 @@ const Header = () => {
                 <Nav.Link>Pricing</Nav.Link>
               </LinkContainer>
               {
-                user ? <button onClick={()=> signOut(auth)} className="btn btn-primary ms-5">Logout</button> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>
+                user ? <button onClick={()=> signOut(auth)} className="btn ms-5 text-white" style={{backgroundColor: 'tomato'}}>Logout</button> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>
               } 
             </Nav>
           </Navbar.Collapse>
