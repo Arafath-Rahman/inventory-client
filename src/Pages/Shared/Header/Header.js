@@ -2,6 +2,7 @@ import { signOut } from "firebase/auth";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { LinkContainer } from "react-router-bootstrap";
+import { Link } from "react-router-dom";
 import auth from "../../../firebase.init";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import "./Header.css";
@@ -9,23 +10,23 @@ import "./Header.css";
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
 
-  if(loading) {
-    return <LoadingSpinner />
+  if (loading) {
+    return <LoadingSpinner />;
   }
 
   return (
     <div className="">
       <Navbar
         collapseOnSelect
-        expand="md"
+        expand="lg"
         bg="light"
         variant="light"
         fixed="top"
         className=""
       >
         <Container>
-          <LinkContainer to='/'>
-            <Navbar.Brand className='fw-bold' href="#home">
+          <LinkContainer to="/">
+            <Navbar.Brand className="fw-bold" href="#home">
               <img
                 alt=""
                 src="https://i.ibb.co/xDZFjpY/logo.png"
@@ -33,7 +34,7 @@ const Header = () => {
                 height="30"
                 className="d-inline-block align-top"
               />{" "}
-              <span style={{color:'tomato'}} >PRAN DEALER INVENTORY</span>
+              <span style={{ color: "tomato" }}>PRAN DEALER INVENTORY</span>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -45,9 +46,27 @@ const Header = () => {
               <LinkContainer to="/inventory">
                 <Nav.Link>Inventory</Nav.Link>
               </LinkContainer>
-              {
-                user ? <button onClick={()=> signOut(auth)} className="btn ms-5 text-white" style={{backgroundColor: 'tomato'}}>Logout</button> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>
-              } 
+              {user ? (
+                <>
+                  <Nav.Link as={Link} to="/addItem">
+                    Add Item
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/manageItem">
+                    Manage Item
+                  </Nav.Link>
+                  <button
+                    onClick={() => signOut(auth)}
+                    className="btn ms-5 text-white"
+                    style={{ backgroundColor: "tomato" }}
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>

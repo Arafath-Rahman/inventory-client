@@ -20,7 +20,7 @@ const AddItem = () => {
       body: JSON.stringify(data)
     })
     .then(result => console.log(result));
-    // reset();  
+    reset();  
   };
   return (
     <div className='w-50 w-md-75 mx-auto'>
