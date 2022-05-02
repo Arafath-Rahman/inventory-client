@@ -3,10 +3,15 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { LinkContainer } from "react-router-bootstrap";
 import auth from "../../../firebase.init";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import "./Header.css";
 
 const Header = () => {
   const [user, loading, error] = useAuthState(auth);
+
+  if(loading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div className="">
@@ -37,8 +42,8 @@ const Header = () => {
               <LinkContainer to="/home">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/pricing">
-                <Nav.Link>Pricing</Nav.Link>
+              <LinkContainer to="/inventory">
+                <Nav.Link>Inventory</Nav.Link>
               </LinkContainer>
               {
                 user ? <button onClick={()=> signOut(auth)} className="btn ms-5 text-white" style={{backgroundColor: 'tomato'}}>Logout</button> : <LinkContainer to="/login"><Nav.Link>Login</Nav.Link></LinkContainer>

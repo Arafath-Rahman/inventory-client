@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
         </div>
         <hr style={{width:'95%', margin:'0 auto'}} />
-        <div className="text-center">
+        <div className="text-center mb-3">
           &copy; {new Date().getFullYear()}. <span style={{ color: "tomato" }}>PRAN Dealer Inventory</span>. All rights reserved.
         </div>
     </div>

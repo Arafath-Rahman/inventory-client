@@ -1,5 +1,4 @@
 import React from "react";
-import { Spinner } from "react-bootstrap";
 import {
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
@@ -9,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import Social from "../Social/Social";
 import "./Login.css";
 
@@ -26,7 +26,7 @@ const Login = () => {
   const [signInWithEmailAndPassword, loggedUser, loggedLoading, loggedError] =
     useSignInWithEmailAndPassword(auth);
 
-  const [signInWithGoogle, gooogleUser, gooogleLoading, gooogleError] =
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
     
@@ -40,7 +40,7 @@ const Login = () => {
 
   const gotoHome = () => navigate("/");
 
-  if (loggedUser?.user?.uid || gooogleUser?.user?.uid) {
+  if (loggedUser?.user?.uid || googleUser?.user?.uid) {
     toast.success("Login Successful!", {
       position: "top-center",
       autoClose: 1000,
@@ -72,19 +72,8 @@ const Login = () => {
     }
   }
 
-  if (gooogleLoading || loggedLoading) {
-    return (
-      <div
-        className="w-100 d-flex justify-content-center mx-auto"
-        style={{ height: "100vh", marginTop: "200px" }}
-      >
-        <Spinner
-          style={{ width: "60px", height: "60px" }}
-          animation="border"
-          variant="danger"
-        />
-      </div>
-    );
+  if (googleLoading || loggedLoading || sending) {
+    return <LoadingSpinner />;
   }
 
   return (
