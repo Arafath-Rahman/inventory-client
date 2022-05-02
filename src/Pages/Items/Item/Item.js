@@ -6,12 +6,15 @@ const Item = ({ item }) => {
   return (
     <div className="col col-md-6 col-lg-4 d-flex justify-content-center text-center">
       <Card style={{ width: "20rem" }}>
-        <Card.Img variant="top" src="holder.js/100px180" />
+        <Card.Title className="fs-4 fw-bold my-1">{item.name}</Card.Title>
+        <Card.Img variant="top" src={item.img} />
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            <div className="d-flex justify-content-between align-items-center border px-3">
+              <h5 className="fw-bold">Price: <span style={{ color: "tomato" }}>{item.price}</span></h5>
+              <h5 className="fw-bold">Quantity: <span style={{ color: "tomato" }}>{item.quantity}</span></h5>
+            </div>
+            {item.description.length > 100 ? item.description.slice(0, 100)+'...' : item.description}
           </Card.Text>
           <Button variant="primary">Go somewhere</Button>
         </Card.Body>

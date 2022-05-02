@@ -23,7 +23,7 @@ const Header = () => {
             <Navbar.Brand className='fw-bold' href="#home">
               <img
                 alt=""
-                src={require("../../../Assets/images/logo.png")}
+                src="https://i.ibb.co/xDZFjpY/logo.png"
                 width="45"
                 height="30"
                 className="d-inline-block align-top"

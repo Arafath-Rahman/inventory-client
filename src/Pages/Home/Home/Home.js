@@ -59,7 +59,7 @@ const Home = () => {
           </Carousel>
         </div>
       </div>
-      <div>
+      <div className="pt-5">
         <HomeItems />
       </div>
     </div>
