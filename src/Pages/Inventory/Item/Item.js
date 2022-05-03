@@ -21,11 +21,11 @@ const Item = ({ item }) => {
               <h5 className="fw-bold">Price: <span style={{ color: "tomato" }}>{item.price}</span></h5>
               <h5 className="fw-bold">Quantity: <span style={{ color: "tomato" }}>{item.quantity}</span></h5>
             </div>
-            <p className="text-start">
+            <p className="text-start mx-1">
               {item.description.length > 100 ? item.description.slice(0, 100)+'...' : item.description}
             </p>
           </Card.Text>
-          <button onClick={() => navigateToItemDetail(item._id)} style={{backgroundColor:'tomato', color:'white'}} className="border rounded px-5 py-2">Update</button>
+          <button onClick={() => navigateToItemDetail(item._id)} style={{backgroundColor:'tomato', color:'white'}} className="border rounded px-5 py-2">Stock Update</button>
         </Card.Body>
       </Card>
     </div>
