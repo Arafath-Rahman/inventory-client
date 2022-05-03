@@ -14,7 +14,7 @@ const ItemDetail = () => {
       .then((data) => setItem(data));
   });
 
-  const { name, img, price, quantity, description, supplier } = item;
+  const { _id, name, img, price, quantity, description, supplier } = item;
   return (
     <div className="container mx-auto">
       <div className="row g-3 p-4">
@@ -27,6 +27,7 @@ const ItemDetail = () => {
         </div>
         <div className="col-12 col-md-6 border p-2">
           <h1 className="text-center">{name}</h1>
+          <p className="text-muted text-center p-0 m-0"><small>Product Id: {_id}</small></p>
           <div className="border d-flex justify-content-between p-2 pb-0 my-3">
             <h4>Price: <span style={{color:'tomato'}} className="fw-bold">${price}</span></h4>
             <h4>Quantity: <span style={{color:'tomato'}} className="fw-bold">${quantity}</span></h4>

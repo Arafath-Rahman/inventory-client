@@ -1,8 +1,12 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import './AddItem.css';
+import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import auth from "../../../firebase.init";
+import "./AddItem.css";
 
 const AddItem = () => {
+  const [user, loading, error] = useAuthState(auth);
   const {
     register,
     handleSubmit,
@@ -12,25 +16,28 @@ const AddItem = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    fetch('http://localhost:5000/inventory', {
-      method: 'POST',
+    fetch("http://localhost:5000/inventory", {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
-      body: JSON.stringify(data)
-    })
-    .then(result => console.log(result));
-    reset();  
+      body: JSON.stringify(data),
+    }).then((result) => {
+      if (result.status === 200) {
+        toast.success("Successfully added item to inventory!");
+      }
+    });
+    reset();
   };
   return (
-    <div className='w-50 w-md-75 mx-auto'>
+    <div className="w-50 w-md-75 mx-auto">
       <h2
         className="mt-5 text-center fs-2 fw-bold text-decoration-underline mb-5"
         style={{ color: "tomato" }}
       >
         Add Item to Inventory
       </h2>
-      <form className='' onSubmit={handleSubmit(onSubmit)}>
+      <form className="" onSubmit={handleSubmit(onSubmit)}>
         <input
           className="w-100 border rounded px-2 py-2 fs-5 mb-3"
           {...register("name", { required: true })}
@@ -58,7 +65,16 @@ const AddItem = () => {
           {...register("img", { required: true })}
           placeholder="Photo URL"
         />
-        
+        <fieldset disabled>
+          <label>Supplier Name: </label>
+          <input
+            className="w-100 border rounded px-2 py-2 fs-5 mb-3"
+            {...register("supplier")}
+            placeholder={"Supplier Name: " + user?.email.split("@")[0]}
+            value={user?.email.split("@")[0]}
+          />
+        </fieldset>
+
         <input
           type="submit"
           value="Add Item"

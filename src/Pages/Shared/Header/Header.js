@@ -52,7 +52,7 @@ const Header = () => {
                     Add Item
                   </Nav.Link>
                   <Nav.Link as={Link} to="/manageItem">
-                    Manage Item
+                    Manage Inventory
                   </Nav.Link>
                   <button
                     onClick={() => signOut(auth)}
