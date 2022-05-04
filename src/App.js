@@ -10,6 +10,7 @@ import AddItem from "./Pages/Inventory/AddItem/AddItem";
 import Inventory from "./Pages/Inventory/Inventory/Inventory";
 import ItemDetail from "./Pages/Inventory/ItemDetail/ItemDetail";
 import ManageItem from "./Pages/Inventory/ManageItem/ManageItem";
+import MyItems from "./Pages/Inventory/MyItems/MyItems";
 import Footer from "./Pages/Shared/Footer/Footer";
 import Header from "./Pages/Shared/Header/Header";
 
@@ -23,7 +24,8 @@ function App() {
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/inventory/:itemId" element={<ItemDetail />} />
         <Route path="/addItem" element={<AddItem />} />
-        <Route path="/manageItem" element={<ManageItem />} />
+        <Route path="/manageInventory" element={<ManageItem />} />
+        <Route path="/myItems" element={<MyItems />} />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />

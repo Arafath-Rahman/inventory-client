@@ -1,10 +1,12 @@
 import React from 'react';
 import { MdInventory } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 import useAllItems from '../../../Hooks/useAllItems';
 import Item from '../../Inventory/Item/Item';
 import './HomeItems.css';
 
 const HomeItems = () => {
+  const navigate = useNavigate();
   const [items] = useAllItems();
   return (
     <div>
@@ -15,7 +17,7 @@ const HomeItems = () => {
         }
       </div>
     <div className=''>
-      <button style={{backgroundColor: 'goldenrod', color:'white'}} className='btn rounded border d-block mx-auto mt-4 py-3 w-50'>Manage Inventories <MdInventory /> </button>
+      <button onClick={() => navigate('/manageInventory')} style={{backgroundColor: 'goldenrod', color:'white'}} className='btn rounded border d-block mx-auto mt-4 py-3 w-50'>Manage Inventories <MdInventory /> </button>
     </div>
     </div>
   );

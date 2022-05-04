@@ -1,12 +1,22 @@
-import React from "react";
-import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import auth from "../../../firebase.init";
 import useAllItems from "../../../Hooks/useAllItems";
-import "./ManageItem.css";
+import "./MyItems.css";
 
-const ManageItem = () => {
+const MyItems = () => {
+  const [user, loading, error] = useAuthState(auth);
+  
   const [items, setItems] = useAllItems();
-  const navigate = useNavigate();
+  const [userItems, setUserItems] = useState([]);
+
+  //getting users added items only
+  useEffect(()=>{
+    fetch(`http://localhost:5000/myItems?email=${user.email}`)
+    .then(res => res.json())
+    .then(data => setUserItems(data))
+  }, [items, user])
 
   const handleDelete = id => {
     const proceed = window.confirm('Are you sure you want to delete this item?');
@@ -16,8 +26,8 @@ const ManageItem = () => {
       })
       .then(res => res.json())
       .then(data => {
-        const remaining = items.filter(item => item._id !== id);
-        setItems(remaining);
+        const remaining = userItems.filter(item => item._id !== id);
+        setUserItems(remaining);
       })
     }
   }
@@ -27,17 +37,15 @@ const ManageItem = () => {
   }
 
   return (
-    <div className="container mx-auto">
+    <div>
       <h2
         className="mt-5 text-center fs-2 fw-bold text-decoration-underline mb-5"
         style={{ color: "tomato" }}
       >
-        Manage Inventory
+        My Items
       </h2>
-      <div className=''>
-      <button onClick={()=> navigate('/addItem')} style={{backgroundColor: 'Gainsboro', color:'black'}} className='btn rounded border d-block mx-auto my-4'>Add New Item <FaPlusCircle /> </button>
-    </div>
-      {items.map((item) => (
+      <div>
+      {userItems.map((item) => (
         <>
           <div
             key={item._id}
@@ -69,8 +77,9 @@ const ManageItem = () => {
           </div>
         </>
       ))}
+      </div>
     </div>
   );
 };
 
-export default ManageItem;
+export default MyItems;

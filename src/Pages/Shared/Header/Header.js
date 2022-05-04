@@ -43,16 +43,19 @@ const Header = () => {
               <LinkContainer to="/home">
                 <Nav.Link>Home</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/inventory">
-                <Nav.Link>Inventory</Nav.Link>
-              </LinkContainer>
+              <Nav.Link as={Link} to="/inventory">
+                Inventory
+              </Nav.Link>
               {user ? (
                 <>
                   <Nav.Link as={Link} to="/addItem">
                     Add Item
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/manageItem">
+                  <Nav.Link as={Link} to="/manageInventory">
                     Manage Inventory
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/myItems">
+                    My Items
                   </Nav.Link>
                   <button
                     onClick={() => signOut(auth)}

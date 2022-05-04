@@ -15,7 +15,6 @@ const AddItem = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     fetch("http://localhost:5000/inventory", {
       method: "POST",
       headers: {
@@ -29,6 +28,8 @@ const AddItem = () => {
     });
     reset();
   };
+
+
   return (
     <div className="w-50 w-md-75 mx-auto">
       <h2
@@ -71,7 +72,8 @@ const AddItem = () => {
             className="w-100 border rounded px-2 py-2 fs-5 mb-3"
             {...register("supplier")}
             placeholder={"Supplier Name: " + user?.email.split("@")[0]}
-            value={user?.email.split("@")[0]}
+            // getting user email as supplier name 
+            value={user?.email}
           />
         </fieldset>
 
