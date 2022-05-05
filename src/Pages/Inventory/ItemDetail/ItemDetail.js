@@ -14,6 +14,7 @@ const ItemDetail = () => {
       .then((data) => setItem(data));
   });
 
+
   const { _id, name, img, price, quantity, description, supplier } = item;
   return (
     <div className="container mx-auto">

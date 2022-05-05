@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Login from "./Pages/Authentication/Login/Login";
+import RequireAuth from "./Pages/Authentication/RequireAuth/RequireAuth";
 import SignUp from "./Pages/Authentication/SignUp/SignUp";
 import Blogs from "./Pages/Blogs/Blogs";
 import Home from "./Pages/Home/Home/Home";
@@ -22,8 +23,22 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/inventory" element={<Inventory />} />
-        <Route path="/inventory/:itemId" element={<ItemDetail />} />
+        <Route
+          path="/inventory"
+          element={
+            <RequireAuth>
+              <Inventory />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/inventory/:itemId"
+          element={
+            <RequireAuth>
+              <ItemDetail />
+            </RequireAuth>
+          }
+        />
         <Route path="/addItem" element={<AddItem />} />
         <Route path="/manageInventory" element={<ManageItem />} />
         <Route path="/myItems" element={<MyItems />} />

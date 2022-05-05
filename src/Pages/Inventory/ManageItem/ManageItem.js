@@ -1,10 +1,13 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import auth from "../../../firebase.init";
 import useAllItems from "../../../Hooks/useAllItems";
 import "./ManageItem.css";
 
 const ManageItem = () => {
+  const [user] = useAuthState(auth);
   const [items, setItems] = useAllItems();
   const navigate = useNavigate();
 
@@ -24,6 +27,12 @@ const ManageItem = () => {
 
   const handleEdit = id => {
     alert('working on edit...');
+  }
+
+  const gotoLogin = () => navigate("/login");
+
+  if(!user) {
+    gotoLogin();
   }
 
   return (

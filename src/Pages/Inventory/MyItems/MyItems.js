@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import "./MyItems.css";
 
 const MyItems = () => {
   const [user] = useAuthState(auth);
+  const navigate = useNavigate();
   const [userItems, setUserItems] = useState([]);
 
   //getting users added items only
   useEffect(()=>{
-    fetch(`http://localhost:5000/myItems?email=${user.email}`)
+    fetch(`http://localhost:5000/myItems?email=${user?.email}`)
     .then(res => res.json())
     .then(data => setUserItems(data))
   }, [user])
@@ -31,6 +33,12 @@ const MyItems = () => {
 
   const handleEdit = id => {
     alert('working on edit...');
+  }
+
+  const gotoHome = () => navigate("/");
+
+  if(!user) {
+    gotoHome();
   }
 
   return (

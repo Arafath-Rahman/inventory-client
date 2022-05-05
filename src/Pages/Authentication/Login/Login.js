@@ -5,7 +5,7 @@ import {
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
@@ -13,8 +13,10 @@ import Social from "../Social/Social";
 import "./Login.css";
 
 const Login = () => {
+  let location = useLocation();
   const navigate = useNavigate();
-  // const [email, setEmail] = useState('');
+  
+  let from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -38,7 +40,7 @@ const Login = () => {
     reset();
   };
 
-  const gotoHome = () => navigate("/");
+  const gotoPrevLocation = () => navigate(from, { replace: true });;
 
   if (loggedUser?.user?.uid || googleUser?.user?.uid) {
     toast.success("Login Successful!", {
@@ -51,7 +53,7 @@ const Login = () => {
       progress: undefined,
       toastId: "success1",
     });
-    gotoHome();
+    gotoPrevLocation();
   }
 
   const handleGoogleSignIn = () => {
