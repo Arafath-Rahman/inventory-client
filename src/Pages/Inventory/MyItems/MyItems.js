@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import auth from "../../../firebase.init";
-import useAllItems from "../../../Hooks/useAllItems";
 import "./MyItems.css";
 
 const MyItems = () => {
-  const [user, loading, error] = useAuthState(auth);
-  
-  const [items, setItems] = useAllItems();
+  const [user] = useAuthState(auth);
   const [userItems, setUserItems] = useState([]);
 
   //getting users added items only
@@ -16,7 +13,7 @@ const MyItems = () => {
     fetch(`http://localhost:5000/myItems?email=${user.email}`)
     .then(res => res.json())
     .then(data => setUserItems(data))
-  }, [items, user])
+  }, [user])
 
   const handleDelete = id => {
     const proceed = window.confirm('Are you sure you want to delete this item?');

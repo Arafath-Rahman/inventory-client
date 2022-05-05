@@ -13,6 +13,7 @@ import ManageItem from "./Pages/Inventory/ManageItem/ManageItem";
 import MyItems from "./Pages/Inventory/MyItems/MyItems";
 import Footer from "./Pages/Shared/Footer/Footer";
 import Header from "./Pages/Shared/Header/Header";
+import NotFound from "./Pages/Shared/NotFound/NotFound";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer></Footer>
       <ToastContainer
