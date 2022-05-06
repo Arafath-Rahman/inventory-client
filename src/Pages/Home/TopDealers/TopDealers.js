@@ -12,8 +12,6 @@ const insideStyles = {
   transform: "translate(-50%,-50%)",
 };
 
-const image4 = "https://i.ibb.co/4pNrYhw/6829613.jpg";
-
 const TopDealers = () => {
   return (
     <div className="mt-5 pt-5">
@@ -27,7 +25,7 @@ const TopDealers = () => {
       </div>
       <div>
         <Parallax
-          bgImage={image4}
+          bgImage={"https://i.ibb.co/4pNrYhw/6829613.jpg"}
           strength={200}
           renderLayer={(percentage) => (
             <div>
@@ -48,12 +46,12 @@ const TopDealers = () => {
         >
           <div style={{ height: "100vh" }}>
             <div style={insideStyles} className="d-block mx-auto text-center">
-              <Carousel fade interval={null} indicators={false}>
+              <Carousel interval={3000} indicators={false}>
                 <Carousel.Item>
                   <Card style={{ width: "18rem" }}>
                     <Card.Img
                       variant="top"
-                      src="https://i.ibb.co/nc1SB5d/d3.jpg"
+                      src="https://i.ibb.co/wL9ST1c/d1.jpg"
                     />
                     <Card.Body>
                       <Card.Title>Johnny Manna</Card.Title>
@@ -95,7 +93,7 @@ const TopDealers = () => {
                   <Card style={{ width: "18rem" }}>
                     <Card.Img
                       variant="top"
-                      src="https://i.ibb.co/wL9ST1c/d1.jpg"
+                      src="https://i.ibb.co/nc1SB5d/d3.jpg"
                     />
                     <Card.Body>
                       <Card.Title>Will Joshim</Card.Title>

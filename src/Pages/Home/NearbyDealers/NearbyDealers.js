@@ -17,7 +17,7 @@ const NearbyDealers = () => {
         <MapContainer
           center={[23.778444677250747, 90.42571466487236]}
           zoom={15}
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
           style={{ height: "500px", width: "100%" }}
         >
           <TileLayer

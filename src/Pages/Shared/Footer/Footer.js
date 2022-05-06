@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="rounded-top mt-5 d-flex flex-column justify-content-around text center bg-dark text-light w-100" style={{height:'150px'}}>
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 mx-5">
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center mt-3">
             <img src="https://i.ibb.co/xDZFjpY/logo.png" height="36px" alt="logo" />
             <span className="ms-2 fs-6">PRAN Dealer Inventory</span>
           </div>
