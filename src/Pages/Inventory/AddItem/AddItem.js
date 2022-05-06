@@ -1,12 +1,14 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import "./AddItem.css";
 
 const AddItem = () => {
   const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,6 +29,7 @@ const AddItem = () => {
       }
     });
     reset();
+    navigate("/myItems");
   };
 
 
