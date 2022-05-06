@@ -2,6 +2,7 @@ import React from "react";
 import { Carousel } from "react-bootstrap";
 import HomeItems from "../HomeItems/HomeItems";
 import NearbyDealers from "../NearbyDealers/NearbyDealers";
+import TopDealers from "../TopDealers/TopDealers";
 import "./Home.css";
 
 const Home = () => {
@@ -62,6 +63,9 @@ const Home = () => {
       </div>
       <div className="pt-5 pb-5">
         <HomeItems />
+      </div>
+      <div className="pt-5">
+        <TopDealers />
       </div>
       <div className="py-5">
         <NearbyDealers />

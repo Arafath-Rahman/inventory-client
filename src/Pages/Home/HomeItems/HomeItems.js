@@ -10,8 +10,8 @@ const HomeItems = () => {
   const [items] = useAllItems();
   return (
     <div>
-      <h2 className='mt-5 text-center fs-2 fw-bold text-decoration-underline mb-5' style={{color:'tomato'}}>INVENTORY</h2>
-      <div className='container row  g-3'>
+      <h2 className='mt-5 text-center fs-2 fw-bold mb-5' style={{color:'tomato'}}>INVENTORY</h2>
+      <div className='container row  g-3 mt-5'>
         {
           items.slice(0, 6).map(item => <Item key={item._id} item={item} />)
         }
