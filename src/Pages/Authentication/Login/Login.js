@@ -1,8 +1,8 @@
 import React from "react";
 import {
-    useSendPasswordResetEmail,
-    useSignInWithEmailAndPassword,
-    useSignInWithGoogle
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -72,6 +72,18 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogle();
+    fetch("https://pran-dealer-inventory.herokuapp.com/getToken", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email: googleUser.user.email }),
+    })
+      .then((response) => response.json())
+      .then((tokenData) => {
+        // save token to localStorage
+        localStorage.setItem("accessToken", tokenData.accessToken);
+      });
   };
 
   const handleResetpassword = async () => {
