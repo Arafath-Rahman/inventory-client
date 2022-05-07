@@ -15,7 +15,7 @@ import "./Login.css";
 const Login = () => {
   let location = useLocation();
   const navigate = useNavigate();
-  
+
   let from = location.state?.from?.pathname || "/";
 
   const {
@@ -31,16 +31,30 @@ const Login = () => {
   const [signInWithGoogle, googleUser, googleLoading, googleError] =
     useSignInWithGoogle(auth);
 
-    
-  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
 
   const onSubmit = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(email, password);
+    // const {data} = await axios.post("http://localhost:5000/getToken", {email});
+    // console.log(data);
+    fetch("http://localhost:5000/getToken", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((response) => response.json())
+      .then((tokenData) => {
+        // save token to localStorage
+        localStorage.setItem("accessToken", tokenData.accessToken);
+      });
     reset();
   };
 
-  const gotoPrevLocation = () => navigate(from, { replace: true });;
+  const gotoPrevLocation = () => navigate(from, { replace: true });
 
   if (loggedUser?.user?.uid || googleUser?.user?.uid) {
     toast.success("Login Successful!", {
@@ -61,18 +75,17 @@ const Login = () => {
   };
 
   const handleResetpassword = async () => {
-    const email = document.getElementById('email').value;
-    if(email !== ''){
+    const email = document.getElementById("email").value;
+    if (email !== "") {
       await sendPasswordResetEmail(email);
-      toast.success('Password reset email sent!');
-      document.getElementById('email').value = '';
+      toast.success("Password reset email sent!");
+      document.getElementById("email").value = "";
+      return;
+    } else {
+      toast.warn("Please provide an Email!");
       return;
     }
-    else{
-      toast.warn('Please provide an Email!');
-      return;
-    }
-  }
+  };
 
   if (googleLoading || loggedLoading || sending) {
     return <LoadingSpinner />;
@@ -110,7 +123,12 @@ const Login = () => {
       <div className="my-3 text-center">
         <p>
           Forgot password?{" "}
-          <button onClick={()=> handleResetpassword()} className="btn btn-link">Reset it now.</button>
+          <button
+            onClick={() => handleResetpassword()}
+            className="btn btn-link"
+          >
+            Reset it now.
+          </button>
         </p>
       </div>
       <div className="d-flex gap-2 justify-content-center align-items-center my-5">

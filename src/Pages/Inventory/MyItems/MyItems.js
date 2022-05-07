@@ -12,7 +12,13 @@ const MyItems = () => {
 
   //getting users added items only
   useEffect(()=>{
-    fetch(`http://localhost:5000/myItems?email=${user?.email}`)
+    const token = localStorage.getItem('accessToken');
+    console.log(token);
+    fetch(`http://localhost:5000/myItems?email=${user?.email}`, {
+      headers: {
+        "authorization": `Bearer ${token}`
+      }
+    })
     .then(res => res.json())
     .then(data => setUserItems(data))
   }, [user])
