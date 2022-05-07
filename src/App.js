@@ -40,8 +40,22 @@ function App() {
           }
         />
         <Route path="/addItem" element={<AddItem />} />
-        <Route path="/manageInventory" element={<ManageItem />} />
-        <Route path="/myItems" element={<MyItems />} />
+        <Route
+          path="/manageInventory"
+          element={
+            <RequireAuth>
+              <ManageItem />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/myItems"
+          element={
+            <RequireAuth>
+              <MyItems />
+            </RequireAuth>
+          }
+        />
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
