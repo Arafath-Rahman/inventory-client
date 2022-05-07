@@ -10,7 +10,7 @@ const ItemDetail = () => {
 
   //fetching a single item
   useEffect(() => {
-    fetch(`http://localhost:5000/inventory/${itemId}`)
+    fetch(`https://pran-dealer-inventory.herokuapp.com/inventory/${itemId}`)
       .then((res) => res.json())
       .then((data) => setItem(data));
   });
@@ -20,7 +20,7 @@ const ItemDetail = () => {
   //update quantity
   const updateQuantity = newQuantity => {
     
-    fetch(`http://localhost:5000/inventory/${itemId}`, {
+    fetch(`https://pran-dealer-inventory.herokuapp.com/inventory/${itemId}`, {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -28,7 +28,6 @@ const ItemDetail = () => {
         body: JSON.stringify({ quantity: newQuantity }),
       })
         .then((response) => response.json())
-        .then((data) => console.log(data));
   }
 
   //handle delivered update

@@ -1,8 +1,8 @@
 import React from "react";
 import {
-  useSendPasswordResetEmail,
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle
+    useSendPasswordResetEmail,
+    useSignInWithEmailAndPassword,
+    useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -37,9 +37,9 @@ const Login = () => {
   const onSubmit = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(email, password);
-    // const {data} = await axios.post("http://localhost:5000/getToken", {email});
+    // const {data} = await axios.post("https://pran-dealer-inventory.herokuapp.com/getToken", {email});
     // console.log(data);
-    fetch("http://localhost:5000/getToken", {
+    fetch("https://pran-dealer-inventory.herokuapp.com/getToken", {
       method: "POST",
       headers: {
         "content-type": "application/json",
