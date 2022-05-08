@@ -1,5 +1,6 @@
 import { signOut } from "firebase/auth";
 import React, { useEffect, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +18,6 @@ const MyItems = () => {
   useEffect(() => {
     const getUserItems = async () => {
       const url = `http://localhost:5000/myItems?email=${user?.email}`;
-      console.log(url);
       try {
         const { data } = await axiosPrivate.get(url);
         setUserItems(data);
@@ -35,20 +35,21 @@ const MyItems = () => {
     getUserItems();
   }, [user, navigate]);
 
-  const handleDelete = (id) => {
-    const proceed = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
-    if (proceed) {
-      fetch(`http://localhost:5000/inventory/${id}`, {
-        method: "DELETE",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const remaining = userItems.filter((item) => item._id !== id);
-          setUserItems(remaining);
-        });
-    }
+  //setting react-bootstrap modal for delete confirmation
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const deleteItemFromDB = (id) => {
+    fetch(`http://localhost:5000/inventory/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const remaining = userItems.filter((item) => item._id !== id);
+        setUserItems(remaining);
+      });
   };
 
   const handleEdit = (id) => {
@@ -72,11 +73,8 @@ const MyItems = () => {
       <div>
         {userItems.map((item) => (
           <>
-            <div
-              key={item._id}
-              className="border d-flex justify-content-between px-2 w-75 mx-auto rounded mb-1"
-            >
-              <div className="d-flex gap-3">
+            <div className="border d-flex justify-content-between px-2 w-75 mx-auto rounded mb-1">
+              <div key={item._id} className="d-flex gap-3">
                 <img src={item.img} width="100px" alt="pic" />
                 <div>
                   <h6>{item.name}</h6>
@@ -96,7 +94,7 @@ const MyItems = () => {
                   <FaEdit />
                 </button>
                 <button
-                  onClick={() => handleDelete(item._id)}
+                  onClick={handleShow}
                   style={{ fontSize: "24px", color: "tomato" }}
                   className="border rounded"
                 >
@@ -104,6 +102,43 @@ const MyItems = () => {
                 </button>
               </div>
             </div>
+            <Modal
+              show={show}
+              onHide={() => {
+                handleClose();
+              }}
+              backdrop={false}
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title className="text-danger">
+                  Delete Confirmation
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Are you sure you want to{" "}
+                <strong className="text-danger">DELETE</strong> this item?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    handleClose();
+                  }}
+                >
+                  No
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleClose();
+                    deleteItemFromDB(item._id);
+                  }}
+                  variant="danger"
+                >
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </>
         ))}
       </div>

@@ -3,7 +3,7 @@ import {
   useAuthState,
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
-  useSignInWithGoogle
+  useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { BsFillInfoCircleFill } from "react-icons/bs";
@@ -96,21 +96,28 @@ const Login = () => {
 
   //setting up error messages
   let firebaseErrorMessage;
-  if(loggedError){
-    if(loggedError.message.includes("auth/user-not-found")){
-      firebaseErrorMessage = "There is no user found with this email. Please recheck your email."
+  if (loggedError) {
+    if (loggedError.message.includes("auth/user-not-found")) {
+      firebaseErrorMessage =
+        "There is no user found with this email. Please recheck your email.";
     }
-    if(loggedError.message.includes("auth/wrong-password")){
-      firebaseErrorMessage = "You have entered a wrong password. Please try again."
+    if (loggedError.message.includes("auth/wrong-password")) {
+      firebaseErrorMessage =
+        "You have entered a wrong password. Please try again.";
     }
-    if(loggedError.message.includes("auth/too-many-requests")){
-      firebaseErrorMessage = "Too many unsuccessfull attempts. Please try again after some time."
+    if (loggedError.message.includes("auth/too-many-requests")) {
+      firebaseErrorMessage =
+        "Too many unsuccessfull attempts. Please try again after some time.";
     }
   }
-  if(googleError?.message){
-    if(googleError.message.includes("auth/popup-closed-by-user")){
-      firebaseErrorMessage = "You've closed the authorization pop-up. Please try again.";
+  if (googleError?.message) {
+    if (googleError.message.includes("auth/popup-closed-by-user")) {
+      firebaseErrorMessage =
+        "You've closed the authorization pop-up. Please try again.";
     }
+  }
+  if (resetError?.message) {
+    firebaseErrorMessage = resetError.message;
   }
 
   return (
@@ -124,17 +131,30 @@ const Login = () => {
           placeholder="Your Email"
           type="email"
         />
-        <span className="d-block mb-3 text-danger">{errors.email?.message && <BsFillInfoCircleFill className="me-2" />}{errors.email?.message}</span>
+        <span className="d-block mb-3 text-danger">
+          {errors.email?.message && <BsFillInfoCircleFill className="me-2" />}
+          {errors.email?.message}
+        </span>
         <input
           className="w-100 border rounded px-2 py-2 fs-5"
           {...register("password", { required: "This field is required." })}
           placeholder="Password"
           type="password"
         />
-        <span className="d-block mb-3 text-danger">{errors.password?.message && <BsFillInfoCircleFill className="me-2" />}{errors.password?.message}</span>
-        
+        <span className="d-block mb-3 text-danger">
+          {errors.password?.message && (
+            <BsFillInfoCircleFill className="me-2" />
+          )}
+          {errors.password?.message}
+        </span>
+
         {/* conditionally rendering errors */}
-        <span className="d-block mb-3 text-danger">{(loggedError?.message || googleError?.message) && <BsFillInfoCircleFill className="me-2" />}{loggedError || googleError ? firebaseErrorMessage : ""}</span>
+        <span className="d-block mb-3 text-danger">
+          {(loggedError?.message || googleError?.message) && (
+            <BsFillInfoCircleFill className="me-2" />
+          )}
+          {loggedError || googleError ? firebaseErrorMessage : ""}
+        </span>
 
         <input
           type="submit"
