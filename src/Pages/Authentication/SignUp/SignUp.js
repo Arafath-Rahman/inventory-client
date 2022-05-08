@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import {
+  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
@@ -23,6 +24,8 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
+  const [user] = useAuthState(auth);
+
   const [
     createUserWithEmailAndPassword,
     signedUser,
@@ -39,6 +42,16 @@ const SignUp = () => {
     reset();
   };
 
+  const regTokenOnGoogleSignIn = async (email) => {
+    const { data } = await axios.post("http://localhost:5000/getToken", {
+      email,
+    });
+    if (data) {
+      // save token to localStorage
+      localStorage.setItem("accessToken", data.accessToken);
+    }
+  };
+
   const gotoHome = () => navigate("/");
 
   if (signedUser?.user?.uid || googleUser?.user?.uid) {
@@ -52,25 +65,12 @@ const SignUp = () => {
       progress: undefined,
       toastId: "success1",
     });
+    regTokenOnGoogleSignIn(user?.email);
     gotoHome();
   }
 
   if (googleLoading || signedLoading) {
     return <LoadingSpinner />;
-  }
-
-  const regTokenOnGoogleSignIn = async (email) => {
-    const { data } = await axios.post("http://localhost:5000/getToken", {
-      email,
-    });
-    if (data) {
-      // save token to localStorage
-      localStorage.setItem("accessToken", data.accessToken);
-    }
-  };
-
-  if (googleUser) {
-    regTokenOnGoogleSignIn(googleUser.user.email);
   }
 
   const handleGoogleSignIn = () => {

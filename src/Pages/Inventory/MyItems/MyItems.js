@@ -17,6 +17,7 @@ const MyItems = () => {
   useEffect(() => {
     const getUserItems = async () => {
       const url = `http://localhost:5000/myItems?email=${user?.email}`;
+      console.log(url);
       try {
         const { data } = await axiosPrivate.get(url);
         setUserItems(data);

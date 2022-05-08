@@ -1,5 +1,4 @@
-import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   useAuthState,
   useSendPasswordResetEmail,
@@ -10,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axiosPrivate from "../../../api/axiosPrivate";
 import auth from "../../../firebase.init";
 import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import Social from "../Social/Social";
@@ -39,8 +39,9 @@ const Login = () => {
   const [sendPasswordResetEmail, sending, resetError] =
     useSendPasswordResetEmail(auth);
 
+  // getting the accessToken ans saving it in localStorage
   const regTokenOnGoogleSignIn = async (email) => {
-    const { data } = await axios.post("http://localhost:5000/getToken", {
+    const { data } = await axiosPrivate.post("http://localhost:5000/getToken", {
       email,
     });
     if (data) {
@@ -48,12 +49,6 @@ const Login = () => {
       localStorage.setItem("accessToken", data.accessToken);
     }
   };
-
-  useEffect(() => {
-    if (googleUser) {
-      regTokenOnGoogleSignIn(googleUser.user.email);
-    }
-  }, [googleUser]);
 
   const onSubmit = (data) => {
     const { email, password } = data;
@@ -74,6 +69,7 @@ const Login = () => {
       progress: undefined,
       toastId: "success1",
     });
+    regTokenOnGoogleSignIn(user?.email);
     gotoPrevLocation();
   }
 
