@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdInventory } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import "./ItemDetail.css";
 
 const ItemDetail = () => {
@@ -45,6 +46,10 @@ const ItemDetail = () => {
     const newQuantity = quantity + parseInt(event.target.stock.value);
     updateQuantity(newQuantity);
     event.target.stock.value = "";
+  }
+
+  if(!item._id) {
+    return <LoadingSpinner />;
   }
 
   return (
