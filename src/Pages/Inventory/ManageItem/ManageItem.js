@@ -5,6 +5,7 @@ import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import useAllItems from "../../../Hooks/useAllItems";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import "./ManageItem.css";
 
 const ManageItem = () => {
@@ -52,6 +53,10 @@ const ManageItem = () => {
 
   if (!user) {
     gotoLogin();
+  }
+
+  if(items.length === 0){
+    return <LoadingSpinner />;
   }
 
   return (

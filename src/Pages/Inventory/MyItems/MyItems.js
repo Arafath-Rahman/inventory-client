@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosPrivate from "../../../api/axiosPrivate";
 import auth from "../../../firebase.init";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import "./MyItems.css";
 
 const MyItems = () => {
@@ -60,6 +61,10 @@ const MyItems = () => {
 
   if (!user) {
     gotoHome();
+  }
+
+  if(userItems.length === 0){
+    return <LoadingSpinner />;
   }
 
   return (

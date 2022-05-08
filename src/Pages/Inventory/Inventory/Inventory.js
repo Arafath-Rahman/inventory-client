@@ -1,9 +1,14 @@
 import React from "react";
 import useAllItems from "../../../Hooks/useAllItems";
+import LoadingSpinner from "../../Shared/LoadingSpinner/LoadingSpinner";
 import Item from "../Item/Item";
 
 const Inventory = () => {
   const [items] = useAllItems();
+
+  if(items.length === 0){
+    return <LoadingSpinner />;
+  }
   return (
     <div>
       <h2

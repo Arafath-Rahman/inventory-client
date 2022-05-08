@@ -3,15 +3,16 @@ import { MdInventory } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import useAllItems from '../../../Hooks/useAllItems';
 import Item from '../../Inventory/Item/Item';
+import LoadingSpinner from '../../Shared/LoadingSpinner/LoadingSpinner';
 import './HomeItems.css';
 
 const HomeItems = () => {
   const navigate = useNavigate();
   const [items] = useAllItems();
 
-  // if(!items){
-  //   return <LoadingSpinner />;
-  // }
+  if(items.length === 0){
+    return <LoadingSpinner />;
+  }
   return (
     <div>
       <h2 className='mt-5 text-center fs-2 fw-bold mb-5' style={{color:'tomato'}}>INVENTORY</h2>
