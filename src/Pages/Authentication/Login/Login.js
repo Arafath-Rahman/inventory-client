@@ -1,5 +1,7 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import {
+  useAuthState,
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
   useSignInWithGoogle
@@ -25,6 +27,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const [user] = useAuthState(auth);
+
   const [signInWithEmailAndPassword, loggedUser, loggedLoading, loggedError] =
     useSignInWithEmailAndPassword(auth);
 
@@ -34,23 +38,25 @@ const Login = () => {
   const [sendPasswordResetEmail, sending, resetError] =
     useSendPasswordResetEmail(auth);
 
+  const regTokenOnGoogleSignIn = async (email) => {
+    const { data } = await axios.post("http://localhost:5000/getToken", {
+      email,
+    });
+    if (data) {
+      // save token to localStorage
+      localStorage.setItem("accessToken", data.accessToken);
+    }
+  };
+
+  useEffect(() => {
+    if (googleUser) {
+      regTokenOnGoogleSignIn(googleUser.user.email);
+    }
+  }, [googleUser]);
+
   const onSubmit = (data) => {
     const { email, password } = data;
     signInWithEmailAndPassword(email, password);
-    // const {data} = await axios.post("https://pran-dealer-inventory.herokuapp.com/getToken", {email});
-    // console.log(data);
-    fetch("https://pran-dealer-inventory.herokuapp.com/getToken", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    })
-      .then((response) => response.json())
-      .then((tokenData) => {
-        // save token to localStorage
-        localStorage.setItem("accessToken", tokenData.accessToken);
-      });
     reset();
   };
 
@@ -72,18 +78,6 @@ const Login = () => {
 
   const handleGoogleSignIn = () => {
     signInWithGoogle();
-    fetch("https://pran-dealer-inventory.herokuapp.com/getToken", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ email: googleUser.user.email }),
-    })
-      .then((response) => response.json())
-      .then((tokenData) => {
-        // save token to localStorage
-        localStorage.setItem("accessToken", tokenData.accessToken);
-      });
   };
 
   const handleResetpassword = async () => {

@@ -15,10 +15,8 @@ const MyItems = () => {
 
   //getting users added items only
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
     const getUserItems = async () => {
-      const url = `https://pran-dealer-inventory.herokuapp.com/myItems?email=${user?.email}`;
+      const url = `http://localhost:5000/myItems?email=${user?.email}`;
       try {
         const { data } = await axiosPrivate.get(url);
         setUserItems(data);
@@ -41,7 +39,7 @@ const MyItems = () => {
       "Are you sure you want to delete this item?"
     );
     if (proceed) {
-      fetch(`https://pran-dealer-inventory.herokuapp.com/inventory/${id}`, {
+      fetch(`http://localhost:5000/inventory/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())

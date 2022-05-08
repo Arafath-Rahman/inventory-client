@@ -1,5 +1,9 @@
+import axios from "axios";
 import React from "react";
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle
+} from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -10,7 +14,7 @@ import "./SignUp.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  
+
   const {
     register,
     handleSubmit,
@@ -25,12 +29,13 @@ const SignUp = () => {
     signedError,
   ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
-  const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
 
   const onSubmit = (data) => {
     const { email, password } = data;
     createUserWithEmailAndPassword(email, password);
-    reset();  
+    reset();
   };
 
   const gotoHome = () => navigate("/");
@@ -49,13 +54,27 @@ const SignUp = () => {
     gotoHome();
   }
 
-  if(googleLoading || signedLoading) {
+  if (googleLoading || signedLoading) {
     return <LoadingSpinner />;
+  }
+
+  const regTokenOnGoogleSignIn = async (email) => {
+    const { data } = await axios.post("http://localhost:5000/getToken", {
+      email,
+    });
+    if (data) {
+      // save token to localStorage
+      localStorage.setItem("accessToken", data.accessToken);
+    }
+  };
+
+  if (googleUser) {
+    regTokenOnGoogleSignIn(googleUser.user.email);
   }
 
   const handleGoogleSignIn = () => {
     signInWithGoogle();
-  }
+  };
 
   return (
     <div id="signup-container" className="mx-auto">
