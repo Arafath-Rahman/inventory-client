@@ -37,6 +37,7 @@ const SignUp = () => {
     useSignInWithGoogle(auth);
 
   const onSubmit = (data) => {
+    console.log(errors);
     const { email, password } = data;
     createUserWithEmailAndPassword(email, password);
     reset();
@@ -77,25 +78,36 @@ const SignUp = () => {
     signInWithGoogle();
   };
 
+  // setting error messages
+  let firebaseErrorMessage;
+  if(googleError?.message){
+    if(googleError.message.includes("auth/popup-closed-by-user")){
+      firebaseErrorMessage = "You've closed the authorization pop-up. Please try again.";
+    }
+  }
+  if(signedError?.message){
+    firebaseErrorMessage = signedError.message;
+  }
+
   return (
     <div id="signup-container" className="mx-auto">
       <h2 className="text-center my-5">SignUp</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           className="w-100 border rounded px-2 py-2 fs-5 mb-3"
-          {...register("name", { required: true })}
+          {...register("name")}
           placeholder="Your Name"
         />
         <input
           className="w-100 border rounded px-2 py-2 fs-5"
-          {...register("email", { required: true })}
+          {...register("email", { required: "This field is required." })}
           placeholder="Your Email"
           type="email"
         />
         <span className="d-block mb-3 text-danger">{errors.email?.message && <BsFillInfoCircleFill className="me-2" />}{errors.email?.message}</span>
         <input
           className="w-100 border rounded px-2 py-2 fs-5"
-          {...register("password", { required: true  , minLength: {
+          {...register("password", { required: "This field is required."  , minLength: {
             value: 6, 
             message: "Password should be atleast 6 characters long."
           }})}
@@ -103,6 +115,10 @@ const SignUp = () => {
           type="password"
         />
         <span className="d-block mb-3 text-danger">{errors.password?.message && <BsFillInfoCircleFill className="me-2" />}{errors.password?.message}</span>
+        {/* conditionally rendering errors */}
+
+        <span className="d-block mb-3 text-danger">{(signedError?.message || googleError?.message) && <BsFillInfoCircleFill className="me-2" />}{signedError || googleError ? firebaseErrorMessage : ""}</span>
+
         <input
           type="submit"
           value="SignUp"

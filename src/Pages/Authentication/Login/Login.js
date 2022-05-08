@@ -94,6 +94,7 @@ const Login = () => {
     return <LoadingSpinner />;
   }
 
+  //setting up error messages
   let firebaseErrorMessage;
   if(loggedError){
     if(loggedError.message.includes("auth/user-not-found")){
@@ -132,6 +133,7 @@ const Login = () => {
         />
         <span className="d-block mb-3 text-danger">{errors.password?.message && <BsFillInfoCircleFill className="me-2" />}{errors.password?.message}</span>
         
+        {/* conditionally rendering errors */}
         <span className="d-block mb-3 text-danger">{(loggedError?.message || googleError?.message) && <BsFillInfoCircleFill className="me-2" />}{loggedError || googleError ? firebaseErrorMessage : ""}</span>
 
         <input
