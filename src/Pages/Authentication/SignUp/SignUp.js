@@ -5,6 +5,7 @@ import {
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
@@ -86,17 +87,22 @@ const SignUp = () => {
           placeholder="Your Name"
         />
         <input
-          className="w-100 border rounded px-2 py-2 fs-5 mb-3"
+          className="w-100 border rounded px-2 py-2 fs-5"
           {...register("email", { required: true })}
           placeholder="Your Email"
           type="email"
         />
+        <span className="d-block mb-3 text-danger">{errors.email?.message && <BsFillInfoCircleFill className="me-2" />}{errors.email?.message}</span>
         <input
-          className="w-100 border rounded px-2 py-2 fs-5 mb-3"
-          {...register("password", { required: true })}
+          className="w-100 border rounded px-2 py-2 fs-5"
+          {...register("password", { required: true  , minLength: {
+            value: 6, 
+            message: "Password should be atleast 6 characters long."
+          }})}
           placeholder="Password"
           type="password"
         />
+        <span className="d-block mb-3 text-danger">{errors.password?.message && <BsFillInfoCircleFill className="me-2" />}{errors.password?.message}</span>
         <input
           type="submit"
           value="SignUp"

@@ -7,6 +7,7 @@ import {
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { BsFillInfoCircleFill } from "react-icons/bs";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
@@ -97,24 +98,46 @@ const Login = () => {
     return <LoadingSpinner />;
   }
 
+  let firebaseErrorMessage;
+  if(loggedError){
+    if(loggedError.message.includes("auth/user-not-found")){
+      firebaseErrorMessage = "There is no user found with this email. Please recheck your email."
+    }
+    if(loggedError.message.includes("auth/wrong-password")){
+      firebaseErrorMessage = "You have entered a wrong password. Please try again."
+    }
+    if(loggedError.message.includes("auth/too-many-requests")){
+      firebaseErrorMessage = "Too many unsuccessfull attempts. Please try again after some time."
+    }
+  }
+  if(googleError?.message){
+    if(googleError.message.includes("auth/popup-closed-by-user")){
+      firebaseErrorMessage = "You've closed the authorization pop-up. Please try again.";
+    }
+  }
+
   return (
     <div id="login-container" className="mx-auto">
       <h2 className="text-center my-5">Login</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
-          className="w-100 border rounded px-2 py-2 fs-5 mb-3"
+          className="w-100 border rounded px-2 py-2 fs-5"
           id="email"
-          {...register("email", { required: true })}
+          {...register("email", { required: "This field is required." })}
           placeholder="Your Email"
           type="email"
         />
+        <span className="d-block mb-3 text-danger">{errors.email?.message && <BsFillInfoCircleFill className="me-2" />}{errors.email?.message}</span>
         <input
-          className="w-100 border rounded px-2 py-2 fs-5 mb-3"
-          {...register("password", { required: true })}
+          className="w-100 border rounded px-2 py-2 fs-5"
+          {...register("password", { required: "This field is required." })}
           placeholder="Password"
           type="password"
         />
-        {errors.password && "Last name is required"}
+        <span className="d-block mb-3 text-danger">{errors.password?.message && <BsFillInfoCircleFill className="me-2" />}{errors.password?.message}</span>
+        
+        <span className="d-block mb-3 text-danger">{(loggedError?.message || googleError?.message) && <BsFillInfoCircleFill className="me-2" />}{loggedError || googleError ? firebaseErrorMessage : ""}</span>
+
         <input
           type="submit"
           value="Login"
