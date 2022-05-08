@@ -3,7 +3,7 @@ import {
   useAuthState,
   useSendPasswordResetEmail,
   useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
+  useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { BsFillInfoCircleFill } from "react-icons/bs";
@@ -41,7 +41,7 @@ const Login = () => {
 
   // getting the accessToken ans saving it in localStorage
   const regTokenOnGoogleSignIn = async (email) => {
-    const { data } = await axiosPrivate.post("http://localhost:5000/getToken", {
+    const { data } = await axiosPrivate.post("https://pran-dealer-inventory.herokuapp.com/getToken", {
       email,
     });
     if (data) {

@@ -17,7 +17,7 @@ const ManageItem = () => {
   //     "Are you sure you want to delete this item?"
   //   );
   //   if (proceed) {
-  //     fetch(`http://localhost:5000/inventory/${id}`, {
+  //     fetch(`https://pran-dealer-inventory.herokuapp.com/inventory/${id}`, {
   //       method: "DELETE",
   //     })
   //       .then((res) => res.json())
@@ -34,7 +34,7 @@ const ManageItem = () => {
   const handleShow = () => setShow(true);
 
   const deleteItemFromDB = (id) => {
-    fetch(`http://localhost:5000/inventory/${id}`, {
+    fetch(`https://pran-dealer-inventory.herokuapp.com/inventory/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

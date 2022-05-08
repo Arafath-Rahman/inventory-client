@@ -44,7 +44,7 @@ const SignUp = () => {
   };
 
   const regTokenOnGoogleSignIn = async (email) => {
-    const { data } = await axios.post("http://localhost:5000/getToken", {
+    const { data } = await axios.post("https://pran-dealer-inventory.herokuapp.com/getToken", {
       email,
     });
     if (data) {

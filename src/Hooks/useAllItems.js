@@ -4,7 +4,7 @@ const useAllItems = () => {
   const [items, setItems] = useState([]);
 
   useEffect(()=> {
-    fetch('http://localhost:5000/inventory')
+    fetch('https://pran-dealer-inventory.herokuapp.com/inventory')
     .then(response => response.json())
     .then(data => setItems(data))
   }, [])

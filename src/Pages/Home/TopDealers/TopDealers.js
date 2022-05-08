@@ -48,7 +48,7 @@ const TopDealers = () => {
         >
           <div style={{ height: "100vh" }}>
             <div style={insideStyles} className="d-block mx-auto text-center ms-3 mt-4">
-              <Carousel width={"20rem"} autoPlay={true} infiniteLoop={true} interval={2000}>
+              <Carousel width={"20rem"} autoPlay={true} infiniteLoop={true} interval={2000} showThumbs={false}>
                 <div>
                   <Card style={{ width: "18rem" }}>
                     <Card.Img

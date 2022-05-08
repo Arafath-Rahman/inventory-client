@@ -8,6 +8,10 @@ import './HomeItems.css';
 const HomeItems = () => {
   const navigate = useNavigate();
   const [items] = useAllItems();
+
+  // if(!items){
+  //   return <LoadingSpinner />;
+  // }
   return (
     <div>
       <h2 className='mt-5 text-center fs-2 fw-bold mb-5' style={{color:'tomato'}}>INVENTORY</h2>
